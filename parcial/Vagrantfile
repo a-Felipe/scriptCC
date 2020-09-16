@@ -1,0 +1,22 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+ENV['VAGRANT NO PARALLEL'] = 'yes'
+
+Vagrant.configure(2) do |config|
+
+ NodeCount = 3
+
+ (1..NodeCount).each do |i|
+   config.vm.define "ubuntuvm#{i}" do |node|
+    node.vm.box = "bento/ubuntu-20.04"
+    node.vm.hostname = "ubuntuvm#{i}"
+    node.vm.network "private_network", ip: "192.168.50.1#{i}"
+    node.vm.provider "virtualbox" do |v|
+	v.name = "ubuntuvm#{i}"
+	v.memory = 1024
+	v.cpus = 1
+	end
+     end
+  end
+end
